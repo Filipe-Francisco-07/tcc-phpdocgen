@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ruleset name="FiliDoc Ruleset">
+    <description>Regras personalizadas para o TCC</description>
+
+    <!-- herda todas as regras PSR12 -->
+    <rule ref="PSR12" />
+
+    <!-- desabilita limite de 120 caracteres -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <!-- hardLimit = 0 desliga completamente -->
+            <property name="lineLimit" value="0"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+        <exclude-pattern>*/src/Analyser/MarcadorDocumentacao.php</exclude-pattern>
+        <exclude-pattern>*/bin/run.php</exclude-pattern>
+        <exclude-pattern>*/input/*.php</exclude-pattern>
+    </rule>
+
+    <!-- opcional: ignora vendor -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <!-- opcional: ignora output gerado -->
+    <exclude-pattern>*/output/*</exclude-pattern>
+</ruleset>

@@ -1,0 +1,90 @@
+repos:
+- repo: local
+  hooks:
+  - id: php-lint
+    name: PHP lint
+    language: system
+    pass_filenames: true
+    entry: powershell
+    args:
+      - -NoProfile
+      - -ExecutionPolicy
+      - Bypass
+      - -Command
+      - |
+        $ErrorActionPreference = "Stop"
+        $files = @($args) | Where-Object { $_ -like '*.php' -and $_ -notlike 'vendor/*' -and $_ -notlike 'docs/*' -and $_ -notlike 'build/*' }
+        if (-not $files) {
+          $files = git diff --cached --name-only --diff-filter=ACM | Where-Object { $_ -like '*.php' -and $_ -notlike 'vendor/*' -and $_ -notlike 'docs/*' -and $_ -notlike 'build/*' }
+        }
+        if (-not $files) { exit 0 }
+        foreach ($f in $files) { & php -l $f; if ($LASTEXITCODE -ne 0) { exit 1 } }
+        exit 0
+
+  - id: phpcs
+    name: PHP_CodeSniffer PSR-12
+    language: system
+    pass_filenames: true
+    entry: powershell
+    args:
+      - -NoProfile
+      - -ExecutionPolicy
+      - Bypass
+      - -Command
+      - |
+        $files = @($args) | Where-Object { $_ -like '*.php' -and $_ -notlike 'vendor/*' -and $_ -notlike 'docs/*' -and $_ -notlike 'build/*' -and $_ -notlike 'input/*' }
+        if (-not $files) {
+          $files = git diff --cached --name-only --diff-filter=ACM | Where-Object { $_ -like '*.php' -and $_ -notlike 'vendor/*' -and $_ -notlike 'docs/*' -and $_ -notlike 'build/*' -and $_ -notlike 'input/*' }
+        }
+        if (-not $files) { exit 0 }
+        & vendor/bin/phpcs --standard=phpcs.xml $files
+        exit $LASTEXITCODE
+
+  - id: php-cs-fixer
+    name: PHP-CS-Fixer
+    language: system
+    pass_filenames: false
+    entry: powershell
+    args:
+      - -NoProfile
+      - -ExecutionPolicy
+      - Bypass
+      - -Command
+      - |
+        $env:PHP_CS_FIXER_IGNORE_ENV='1'
+        if (Test-Path .php-cs-fixer.php) {
+          & vendor/bin/php-cs-fixer fix --using-cache=no
+        } else {
+          $paths = @(); foreach ($d in @('src','bin','tools','tests')) { if (Test-Path $d) { $paths += $d } }
+          if ($paths.Count -gt 0) { & vendor/bin/php-cs-fixer fix @paths --using-cache=no --allow-risky=yes }
+        }
+        exit $LASTEXITCODE
+
+  - id: phpstan
+    name: PHPStan
+    language: system
+    pass_filenames: false
+    entry: powershell
+    args:
+      - -NoProfile
+      - -ExecutionPolicy
+      - Bypass
+      - -Command
+      - |
+        & php -d memory_limit=1G vendor/bin/phpstan analyse src --level=max --no-progress
+        exit $LASTEXITCODE
+
+  - id: run-docgen-smoke
+    name: DocGen smoke (bin/run.php)
+    language: system
+    pass_filenames: false
+    entry: powershell
+    args:
+      - -NoProfile
+      - -ExecutionPolicy
+      - Bypass
+      - -Command
+      - |
+        $env:DOCGEN_FAKE='1'; $env:OPENAI_API_KEY='test'
+        & php bin/run.php --base precommit
+        exit $LASTEXITCODE

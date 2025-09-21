@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpdocumentor configVersion="3">
+  <title>PHPDocGen</title>
+
+  <paths>
+    <output>docs</output>
+    <cache>build/cache</cache>
+  </paths>
+
+  <templates>
+    <template name="clean"/>
+  </templates>
+
+  <versions>
+    <version number="main">
+      <folder>.</folder>
+      <apis>
+        <api>
+          <source dsn="." paths="src"/>
+          <ignore>
+            <path>vendor/*</path>
+            <path>tests/*</path>
+            <path>build/*</path>
+          </ignore>
+          <visibility>protected</visibility>
+          <default-package-name>Application</default-package-name>
+        </api>
+      </apis>
+    </version>
+  </versions>
+</phpdocumentor>

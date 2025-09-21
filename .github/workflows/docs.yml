@@ -1,0 +1,49 @@
+name: docs
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # (Opcional) gera DocBlocks com seu pipeline, em modo fake
+      - name: PHP setup
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Composer install
+        run: composer install --no-interaction --prefer-dist
+      - name: Run DocGen (fake)
+        env:
+          DOCGEN_FAKE: "1"
+          OPENAI_API_KEY: "test"
+        run: php bin/run.php --base ci || true
+
+      # Baixa o phpDocumentor PHAR v3.x e gera docs a partir de src/
+      - name: Download phpDocumentor PHAR
+        run: curl -fsSL https://phpdoc.org/phpDocumentor.phar -o phpdoc.phar
+      - name: Generate docs
+        run: php phpdoc.phar -c phpdoc.xml
+
+      - name: Upload artifact (docs)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build-docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

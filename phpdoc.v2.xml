@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpdocumentor>
+  <title>Doc – PHPDocGen</title>
+
+  <parser>
+    <target>build/cache</target>
+    <encoding>utf-8</encoding>
+    <extensions>php</extensions>
+    <visibility>public,protected</visibility>
+    <default-package-name>Application</default-package-name>
+    <markers>TODO,FIXME</markers>
+    <ignore>
+      <item>vendor/*</item>
+      <item>tests/*</item>
+      <item>build/*</item>
+    </ignore>
+    <directories>
+      <directory>src</directory>
+    </directories>
+  </parser>
+
+  <transformer>
+    <target>docs</target>
+    <templates>
+      <template name="clean"/>
+    </templates>
+  </transformer>
+</phpdocumentor>

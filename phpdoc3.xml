@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<phpdocumentor>
+  <paths>
+    <output>docs</output>
+    <target>docs</target>
+    <directory>src</directory>
+  </paths>
+
+  <version number="main">
+    <api>
+      <default-package>App</default-package>
+      <source dsn="src"/>
+      <ignore>
+        <path>vendor/*</path>
+        <path>tests/*</path>
+      </ignore>
+      <visibility>public,protected</visibility>
+    </api>
+  </version>
+</phpdocumentor>
