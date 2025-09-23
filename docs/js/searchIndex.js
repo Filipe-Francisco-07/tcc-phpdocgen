@@ -3,47 +3,47 @@ Search.appendIndex(
                 {
             "fqsen": "\\Analyser\\MarcadorDocumentacao",
             "name": "MarcadorDocumentacao",
-            "summary": "",
+            "summary": "Classe\u0020respons\u00E1vel\u0020por\u0020analisar\u0020e\u0020marcar\u0020a\u0020documenta\u00E7\u00E3o\u0020de\u0020n\u00F3s\u0020de\u0020c\u00F3digo,\ncoletando\u0020informa\u00E7\u00F5es\u0020sobre\u0020classes,\u0020m\u00E9todos,\u0020fun\u00E7\u00F5es\u0020e\u0020suas\u0020intera\u00E7\u00F5es.",
             "url": "classes/Analyser-MarcadorDocumentacao.html"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Inicializa\u0020as\u0020propriedades\u0020oFind\u0020e\u0020oPP\u0020com\u0020novas\u0020inst\u00E2ncias\u0020de\u0020NodeFinder\u0020e\u0020PrettyPrinter,\u0020respectivamente.",
             "url": "classes/Analyser-MarcadorDocumentacao.html#method___construct"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003AenterNode\u0028\u0029",
             "name": "enterNode",
-            "summary": "",
+            "summary": "Processa\u0020um\u0020n\u00F3\u0020da\u0020\u00E1rvore\u0020sint\u00E1tica,\u0020extraindo\u0020informa\u00E7\u00F5es\u0020sobre\u0020classes,\u0020fun\u00E7\u00F5es,\u0020par\u00E2metros,\u0020retornos,\u0020chamadas,\u0020efeitos\u0020colaterais\u0020e\u0020complexidade.",
             "url": "classes/Analyser-MarcadorDocumentacao.html#method_enterNode"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003AleaveNode\u0028\u0029",
             "name": "leaveNode",
-            "summary": "",
+            "summary": "Remove\u0020a\u0020\u00FAltima\u0020classe\u0020da\u0020pilha\u0020se\u0020o\u0020n\u00F3\u0020fornecido\u0020for\u0020uma\u0020declara\u00E7\u00E3o\u0020de\u0020classe.",
             "url": "classes/Analyser-MarcadorDocumentacao.html#method_leaveNode"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003ArotuloDe\u0028\u0029",
             "name": "rotuloDe",
-            "summary": "",
+            "summary": "Retorna\u0020o\u0020r\u00F3tulo\u0020correspondente\u0020ao\u0020tipo\u0020de\u0020n\u00F3\u0020fornecido.",
             "url": "classes/Analyser-MarcadorDocumentacao.html#method_rotuloDe"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003AentradaBase\u0028\u0029",
             "name": "entradaBase",
-            "summary": "",
+            "summary": "Gera\u0020uma\u0020estrutura\u0020de\u0020dados\u0020com\u0020informa\u00E7\u00F5es\u0020sobre\u0020um\u0020n\u00F3\u0020de\u0020documenta\u00E7\u00E3o,\u0020incluindo\u0020seu\u0020r\u00F3tulo,\u0020nome,\u0020tipo\u0020e\u0020atributos.",
             "url": "classes/Analyser-MarcadorDocumentacao.html#method_entradaBase"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003AnomeCurtoDe\u0028\u0029",
             "name": "nomeCurtoDe",
-            "summary": "",
+            "summary": "Retorna\u0020o\u0020nome\u0020curto\u0020de\u0020um\u0020n\u00F3,\u0020se\u0020dispon\u00EDvel,\u0020baseado\u0020em\u0020seu\u0020tipo.",
             "url": "classes/Analyser-MarcadorDocumentacao.html#method_nomeCurtoDe"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003AfqnDe\u0028\u0029",
             "name": "fqnDe",
-            "summary": "",
+            "summary": "Retorna\u0020o\u0020Fully\u0020Qualified\u0020Name\u0020\u0028FQN\u0029\u0020de\u0020um\u0020n\u00F3\u0020do\u0020parser,\u0020se\u0020dispon\u00EDvel.",
             "url": "classes/Analyser-MarcadorDocumentacao.html#method_fqnDe"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003AtipoParaString\u0028\u0029",
             "name": "tipoParaString",
-            "summary": "",
+            "summary": "Converte\u0020um\u0020tipo\u0020em\u0020sua\u0020representa\u00E7\u00E3o\u0020de\u0020string\u0020correspondente.",
             "url": "classes/Analyser-MarcadorDocumentacao.html#method_tipoParaString"
         },                {
             "fqsen": "\\Analyser\\MarcadorDocumentacao\u003A\u003A\u0024aItens",
@@ -73,17 +73,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Generator\\AplicadorDocumentacao",
             "name": "AplicadorDocumentacao",
-            "summary": "",
+            "summary": "Classe\u0020respons\u00E1vel\u0020por\u0020aplicar\u0020documenta\u00E7\u00E3o\u0020em\u0020conte\u00FAdos\u0020de\u0020texto,\u0020substituindo\u0020placeholders\u0020por\u0020docblocks\u0020correspondentes.",
             "url": "classes/Generator-AplicadorDocumentacao.html"
         },                {
             "fqsen": "\\Generator\\AplicadorDocumentacao\u003A\u003Aaplicar\u0028\u0029",
             "name": "aplicar",
-            "summary": "",
+            "summary": "Processa\u0020o\u0020conte\u00FAdo\u0020fornecido,\u0020substituindo\u0020placeholders\u0020por\u0020documenta\u00E7\u00F5es\u0020correspondentes.",
             "url": "classes/Generator-AplicadorDocumentacao.html#method_aplicar"
         },                {
             "fqsen": "\\Generator\\AplicadorDocumentacao\u003A\u003AparaDocblockComIdentacao\u0028\u0029",
             "name": "paraDocblockComIdentacao",
-            "summary": "",
+            "summary": "Formata\u0020um\u0020texto\u0020em\u0020um\u0020bloco\u0020de\u0020documenta\u00E7\u00E3o\u0020com\u0020indenta\u00E7\u00E3o.",
             "url": "classes/Generator-AplicadorDocumentacao.html#method_paraDocblockComIdentacao"
         },                {
             "fqsen": "\\Generator\\ClienteGPT",
@@ -108,27 +108,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\Parser\\Normalizador",
             "name": "Normalizador",
-            "summary": "",
+            "summary": "Classe\u0020respons\u00E1vel\u0020por\u0020normalizar\u0020c\u00F3digo\u0020PHP,\u0020ajustando\u0020sua\u0020estrutura\u0020e\u0020formato.",
             "url": "classes/App-Parser-Normalizador.html"
         },                {
             "fqsen": "\\App\\Parser\\Normalizador\u003A\u003Anormalizar\u0028\u0029",
             "name": "normalizar",
-            "summary": "",
+            "summary": "Normaliza\u0020o\u0020c\u00F3digo\u0020PHP\u0020bruto,\u0020encapsulando\u002Do\u0020em\u0020estruturas\u0020apropriadas.",
             "url": "classes/App-Parser-Normalizador.html#method_normalizar"
         },                {
             "fqsen": "\\App\\Parser\\ServicoAst",
             "name": "ServicoAst",
-            "summary": "",
+            "summary": "Classe\u0020respons\u00E1vel\u0020por\u0020analisar\u0020c\u00F3digo\u0020PHP\u0020e\u0020arquivos,\u0020retornando\u0020a\u0020\u00E1rvore\u0020sint\u00E1tica\u0020abstrata\u0020\u0028AST\u0029\u0020e\u0020mensagens\u0020de\u0020erro.",
             "url": "classes/App-Parser-ServicoAst.html"
         },                {
             "fqsen": "\\App\\Parser\\ServicoAst\u003A\u003AanalisarCodigo\u0028\u0029",
             "name": "analisarCodigo",
-            "summary": "",
+            "summary": "Analisa\u0020o\u0020c\u00F3digo\u0020fornecido\u0020e\u0020retorna\u0020a\u0020\u00E1rvore\u0020sint\u00E1tica\u0020abstrata\u0020\u0028AST\u0029\u0020e\u0020mensagens\u0020de\u0020erro,\u0020se\u0020houver.",
             "url": "classes/App-Parser-ServicoAst.html#method_analisarCodigo"
         },                {
             "fqsen": "\\App\\Parser\\ServicoAst\u003A\u003AanalisarArquivo\u0028\u0029",
             "name": "analisarArquivo",
-            "summary": "",
+            "summary": "L\u00EA\u0020o\u0020conte\u00FAdo\u0020de\u0020um\u0020arquivo\u0020e\u0020o\u0020analisa,\u0020retornando\u0020os\u0020resultados.",
             "url": "classes/App-Parser-ServicoAst.html#method_analisarArquivo"
         },                {
             "fqsen": "\\Util\\InjetorPlaceholder",
