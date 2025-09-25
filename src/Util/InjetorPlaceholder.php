@@ -9,9 +9,7 @@ final class InjetorPlaceholder
 {
     /**
      * Insere placeholders em um arquivo de entrada com base em um mapa de linhas e IDs.
-     * 
-     * Lê o conteúdo de um arquivo, ordena um array de mapeamento e insere placeholders nas linhas especificadas.
-     * 
+     *
      * @param string $sArquivoEntrada O caminho do arquivo de entrada a ser processado.
      * @param array $aMapa Um array associativo que mapeia linhas a IDs e informações de documentação.
      * @return string O conteúdo do arquivo com os placeholders inseridos.
