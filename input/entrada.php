@@ -1,38 +1,58 @@
 <?php
 
-namespace Util;
+namespace Generator;
 
-final class InjetorPlaceholder
+final class AplicadorDocumentacao
 {
-    public function injetar(string $sArquivoEntrada, array $aMapa): string
+    public function aplicar(string $sConteudo, array $aDocs): string
     {
-        $aLinhas = file($sArquivoEntrada);
-        if ($aLinhas === false) {
-            return '';
-        }
+        $sConteudo = str_replace("\r\n", "\n", $sConteudo);
+        $aLinhas   = explode("\n", $sConteudo);
 
-        usort($aMapa, function (array $aA, array $aB): int {
-            return ((int)($aB['line'] ?? 0)) <=> ((int)($aA['line'] ?? 0));
-        });
+        $iTotal = count($aLinhas);
+        for ($i = 0; $i < $iTotal; $i++) {
+            $sLinha = $aLinhas[$i];
 
-        foreach ($aMapa as $aItem) {
-            $iLinhaAlvo = (int)($aItem['line'] ?? 1);
-            $iIdx       = max(0, $iLinhaAlvo - 1);
-            $sPH        = "{{" . ($aItem['id'] ?? 'doc_desconhecido') . "}}\n";
-
-            $bTemDocIni = !empty($aItem['doc_start']);
-            $bTemDocFim = !empty($aItem['doc_end']);
-
-            if ($bTemDocIni && $bTemDocFim) {
-                $iIni = max(0, (int)$aItem['doc_start'] - 1);
-                $iFim = max(0, (int)$aItem['doc_end']   - 1);
-                $iTam = max(0, $iFim - $iIni + 1);
-                array_splice($aLinhas, $iIni, $iTam);
-                $iIdx = $iIni;
+            if (!preg_match('/^\s*\{\{\s*(doc_[A-Za-z0-9_-]+)\s*\}\}\s*$/', $sLinha, $m)) {
+                continue;
             }
-            array_splice($aLinhas, $iIdx, 0, $sPH);
+            $sId = $m[1];
+            if (!isset($aDocs[$sId])) {
+                continue;
+            }
+
+            // identaÃ§Ã£o da prÃ³pria linha do placeholder
+            preg_match('/^([ \t]*)/', $sLinha, $mi);
+            $sIndent = $mi[1] ?? '';
+
+            // fallback: identaÃ§Ã£o da prÃ³xima linha Ãºtil
+            if ($sIndent === '' && $i + 1 < $iTotal) {
+                $j = $i + 1;
+                while ($j < $iTotal && trim($aLinhas[$j]) === '') {
+                    $j++;
+                }
+                if ($j < $iTotal && preg_match('/^([ \t]+)/', $aLinhas[$j], $mn)) {
+                    $sIndent = $mn[1];
+                }
+            }
+
+            $aLinhas[$i] = $this->paraDocblockComIdentacao($aDocs[$sId], $sIndent);
         }
 
-        return implode('', $aLinhas);
+        return implode("\n", $aLinhas);
+    }
+
+    private function paraDocblockComIdentacao(string $sTexto, string $sIndent = ''): string
+    {
+        $sTexto = trim(str_replace("\r\n", "\n", $sTexto));
+
+        if (!str_starts_with($sTexto, '/**')) {
+            $aLinhas = $sTexto === '' ? ['DocumentaÃ§Ã£o gerada.'] : explode("\n", $sTexto);
+            $aLinhas = array_map(fn ($l) => ' * ' . ltrim(preg_replace('/^\*\s*/', '', $l)), $aLinhas);
+            $sTexto  = "/**\n" . implode("\n", $aLinhas) . "\n */";
+        }
+
+        $aOut = array_map(fn ($l) => $sIndent . $l, explode("\n", $sTexto));
+        return implode("\n", $aOut);
     }
 }
