@@ -1,0 +1,58 @@
+name: CI Docs & Pages (push on main)
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+permissions:
+  contents: write
+env:
+  PUBLISH_BRANCH: gh-pages
+  PUBLISH_DIR: docs
+  PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: '8.2', coverage: none, tools: none }
+      - name: Ensure phpDocumentor
+        run: |
+          [ -f phpdoc.phar ] || curl -L -o phpdoc.phar https://phpdoc.org/phpDocumentor.phar
+          php phpdoc.phar --version
+      - name: Build docs
+        run: |
+          rm -rf build/cache "${PUBLISH_DIR}"
+          if [ -f phpdoc.xml ]; then php phpdoc.phar -c phpdoc.xml;
+          else php phpdoc.phar -d src -t "${PUBLISH_DIR}" --parseprivate; fi
+          test -f "${PUBLISH_DIR}/index.html"
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ env.PUBLISH_DIR }}
+          publish_branch: ${{ env.PUBLISH_BRANCH }}
+          force_orphan: true
+          commit_message: "docs: update PHPDoc (run ${{ github.run_id }})"
+      - name: Notify n8n (always)
+        if: always()
+        env:
+          URL: ${{ secrets.N8N_WEBHOOK_URL }}
+          SIG: ${{ secrets.N8N_SHARED_SECRET }}
+          STATUS: ${{ job.status }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          PAGES_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+          TS: ${{ github.event.head_commit.timestamp || github.run_started_at }}
+        run: |
+          set -e
+          payload=$(jq -n --arg status "$STATUS" --arg repo "$REPO" --arg branch "$BRANCH" \
+                        --arg run_id "$RUN_ID" --arg run_url "$RUN_URL" \
+                        --arg pages "$PAGES_URL" --arg ts "$TS" \
+                        '{status:$status, repo:$repo, branch:$branch, run_id:$run_id, run_url:$run_url, pages_url:$pages, timestamp:$ts}')
+          sig=$(printf '%s' "$payload" | openssl dgst -sha256 -hmac "$SIG" -r | awk '{print $1}')
+          http_code=$(curl -sS -o /tmp/resp.txt -w "%{http_code}" -X POST "$URL" \
+            -H 'Content-Type: application/json' -H "X-Signature: sha256=$sig" --data "$payload")
+          echo "HTTP $http_code"; echo "--- response body ---"; cat /tmp/resp.txt || true
